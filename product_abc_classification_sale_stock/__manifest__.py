@@ -18,9 +18,6 @@
         "views/abc_sale_stock_level_history.xml",
         "views/abc_classification_profile.xml",
     ],
-    "external_dependencies": {
-        "python": ["freezegun"],
-    },
     "demo": [
         "demo/abc_classification_level.xml",
         "demo/abc_classification_profile.xml",
