@@ -11,7 +11,11 @@ class TestProductSet(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.product_set = cls.env.ref("product_set.product_set_i5_computer")
+        cls.product_set = cls.env["product.set"].create(
+            {"name": "i5 computer offer", "ref": "i5 computer offer"}
+        )
+        cls.product = cls.env["product.product"].create({"name": "Test Product"})
+        cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
 
     def test_name(self):
         product_set = self.product_set
@@ -29,7 +33,7 @@ class TestProductSet(common.TransactionCase):
             [{"id": product_set.id, "display_name": "[123] Foo"}],
         )
         # with partner
-        partner = self.env.ref("base.res_partner_1")
+        partner = self.partner
         product_set.partner_id = partner
         self.assertEqual(
             product_set.read(["display_name"]),
@@ -38,20 +42,13 @@ class TestProductSet(common.TransactionCase):
 
     def test_active(self):
         """Test the archive/unarchive of the set and its lines."""
+        product_2 = self.env["product.product"].create({"name": "Test Product 2"})
         prod_set = self.env["product.set"].create(
             {
                 "name": "Test",
                 "set_line_ids": [
-                    (
-                        0,
-                        0,
-                        {"product_id": self.env.ref("product.product_product_1").id},
-                    ),
-                    (
-                        0,
-                        0,
-                        {"product_id": self.env.ref("product.product_product_2").id},
-                    ),
+                    (0, 0, {"product_id": self.product.id}),
+                    (0, 0, {"product_id": product_2.id}),
                 ],
             }
         )

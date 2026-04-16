@@ -72,13 +72,8 @@
                                             widget="section_and_note_text"
                                         />
                                         <field
-                                            name="product_packaging_id"
+                                            name="uom_id"
                                             context="{'default_product_id': product_id}"
-                                            groups="product.group_stock_packaging"
-                                        />
-                                        <field
-                                            name="product_packaging_qty"
-                                            groups="product.group_stock_packaging"
                                         />
                                         <field name="quantity" />
                                         <field
